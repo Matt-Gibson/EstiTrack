@@ -32,4 +32,9 @@ public static class EstimateService
     {
         return estimates.ToArray();
     }
+
+    public static void AddEstimate(Estimate estimate)
+    {
+        estimates.Add(estimate);
+    }
 }
