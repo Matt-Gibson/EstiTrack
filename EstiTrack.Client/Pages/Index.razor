@@ -1,8 +1,15 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
 
 <PageTitle>EstiTracker</PageTitle>
 
 <h1>Welcome to EstiTracker</h1>
+
+<div class="row mb-4">
+    <div class="col-sm-6">
+        <button type="button" class="btn btn-primary" @onclick="CreateEstimate">New Estimate</button>
+    </div>
+</div>
 
 @if (estimates is null)
 {
@@ -46,6 +53,11 @@ else
    protected override void OnInitialized()
    {
        estimates = EstimateService.GetEstimates();
+   }
+
+   private void CreateEstimate()
+   {
+    NavigationManager.NavigateTo("/estimate");
    }
 }
 

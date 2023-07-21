@@ -35,6 +35,7 @@ public static class EstimateService
 
     public static void AddEstimate(Estimate estimate)
     {
+        estimate.Id = estimates.Max(estimate => estimate.Id) + 1;
         estimates.Add(estimate);
     }
 }
