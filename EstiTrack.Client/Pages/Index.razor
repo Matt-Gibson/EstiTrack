@@ -4,8 +4,15 @@
 
 <h1>Welcome to EstiTracker</h1>
 
-<table>
-    <thead>
+@if (estimates is null)
+{
+    <p><em>Loading...</em></p>
+}
+
+else
+{
+    <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
         <th>Id</th>
         <th>Customer</th>
         <th>Job Type</th>
@@ -30,32 +37,15 @@
     </tbody>
 
 </table>
+}
 
 @code
 {
-    private Estimate[] estimates = new[]
-    {
-        new Estimate()
-        {
-            Id = 1,
-            Customer = new(),
-            JobType = "Gutter",
-            IsRush = true
-        },
-        new Estimate()
-        {
-            Id = 2,
-            Customer = new(),
-            JobType = "Window",
-            IsRush = false
-        },
-        new Estimate()
-        {
-            Id = 3,
-            Customer = new(),
-            JobType = "Roof",
-            IsRush = true
-        }
-    };
+   private Estimate[]? estimates;
+
+   protected override void OnInitialized()
+   {
+       estimates = EstimateService.GetEstimates();
+   }
 }
 
