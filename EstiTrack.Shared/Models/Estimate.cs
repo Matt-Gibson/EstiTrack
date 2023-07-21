@@ -6,5 +6,6 @@ public class Estimate
     public DateOnly DateCreated { get; set; }
     public DateOnly DateUpdated { get; set; }
     public Customer Customer { get; set; } = new();
+    public required String JobType { get; set; }
     public bool IsRush { get; set; }
 }
