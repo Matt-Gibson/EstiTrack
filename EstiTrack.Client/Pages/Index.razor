@@ -6,6 +6,7 @@
 
 <table>
     <thead>
+        <th>Id</th>
         <th>Customer</th>
         <th>Job Type</th>
         <th>Date Created</th>
@@ -14,12 +15,47 @@
         <th></th>
     </thead>
     <tbody>
-
+        @foreach (var estimate in estimates)
+        {
+            <tr>
+                <td>@estimate.Id</td>
+                <td>@estimate.Customer</td>
+                <td>@estimate.JobType</td>
+                <td>@estimate.DateCreated</td>
+                <td>@estimate.DateUpdated</td>
+                <td>@estimate.IsRush</td>
+                <td></td>
+            </tr>
+        }
     </tbody>
 
 </table>
 
-@code{
-
+@code
+{
+    private Estimate[] estimates = new[]
+    {
+        new Estimate()
+        {
+            Id = 1,
+            Customer = new(),
+            JobType = "Gutter",
+            IsRush = true
+        },
+        new Estimate()
+        {
+            Id = 2,
+            Customer = new(),
+            JobType = "Window",
+            IsRush = false
+        },
+        new Estimate()
+        {
+            Id = 3,
+            Customer = new(),
+            JobType = "Roof",
+            IsRush = true
+        }
+    };
 }
 
