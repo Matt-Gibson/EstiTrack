@@ -1,10 +1,17 @@
 ﻿@page "/estimate"
+@page "/estimate/{id:int}"
 @inject NavigationManager NavigationManager
 
-<PageTitle>New Estimate</PageTitle>
+<PageTitle>@title</PageTitle>
 <h1>Estimate List</h1>
-<h3>New Estimate</h3>
+<h3>@title</h3>
 
+@if (estimate is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
 <div class="row">
     <div class="col-sm-4">
         <EditForm Model="@estimate" OnSubmit="HandleSubmit">
@@ -43,20 +50,62 @@
         </EditForm>
     </div>
 </div>
+}
 
 @code 
 {
-    private Estimate estimate = new() {
-        FirstName = string.Empty,
-        LastName = string.Empty,
-        PhoneNumber = string.Empty,
-        JobType = string.Empty,
-        IsRush = false
-    };
+    [Parameter]
+    public int? Id {get; set;}
+
+    private string title = string.Empty;
+
+    private Estimate? estimate;
+
+        protected override void OnParametersSet()
+        {
+            if (Id is not null)
+            {
+                title = $"Editing Estimate {Id}";
+                Estimate foundEstimate = EstimateService.GetEstimateByID(Id.Value);
+                estimate = new()
+                {
+                    Id = foundEstimate.Id,
+                    FirstName = foundEstimate.FirstName,
+                    LastName = foundEstimate.LastName,
+                    PhoneNumber = foundEstimate.PhoneNumber,
+                    JobType = foundEstimate.JobType,
+                    IsRush = foundEstimate.IsRush,
+                    DateCreated = foundEstimate.DateCreated,
+                    DateUpdated = foundEstimate.DateUpdated
+                }; 
+            }
+            else
+            {
+                title = "New Estimate";
+                estimate = new() 
+                {
+                           FirstName = string.Empty,
+                           LastName = string.Empty,
+                           PhoneNumber = string.Empty,
+                           JobType = string.Empty,
+                           IsRush = false
+                };
+            }
+        }
+
+    
 
     private void HandleSubmit()
     {
-        EstimateService.AddEstimate(estimate);
+        if (estimate!.Id == 0)
+        {
+            EstimateService.AddEstimate(estimate);
+        }
+        else
+        {
+            EstimateService.UpdateEstimate(estimate);
+        }
+
         NavigationManager.NavigateTo("/");
     }
 
@@ -65,3 +114,4 @@
         NavigationManager.NavigateTo("/");
     }
 }
+

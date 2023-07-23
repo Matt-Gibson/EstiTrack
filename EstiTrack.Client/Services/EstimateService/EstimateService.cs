@@ -35,4 +35,21 @@ public static class EstimateService
         estimate.Id = estimates.Max(estimate => estimate.Id) + 1;
         estimates.Add(estimate);
     }
+
+    public static Estimate GetEstimateByID(int id)
+    {
+        return estimates.Find(estimate => estimate.Id == id) ?? throw new Exception("Could not find given id.");
+    }
+
+    public static void UpdateEstimate(Estimate updatedEstimate)
+    {
+        Estimate existingEstimate = GetEstimateByID(updatedEstimate.Id);
+        existingEstimate.FirstName = updatedEstimate.FirstName;
+        existingEstimate.LastName = updatedEstimate.LastName;
+        existingEstimate.JobType = updatedEstimate.JobType;
+        existingEstimate.PhoneNumber = updatedEstimate.PhoneNumber;
+        existingEstimate.IsRush = updatedEstimate.IsRush;
+        existingEstimate.DateCreated = updatedEstimate.DateCreated;
+        existingEstimate.DateUpdated = updatedEstimate.DateUpdated;
+    }
 }
