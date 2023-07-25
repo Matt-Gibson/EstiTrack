@@ -43,9 +43,9 @@ public static class EstimateService
         }
     };
 
-    public static Estimate[] GetEstimates()
+    public static List<Estimate> GetEstimates()
     {
-        return estimates.ToArray();
+        return estimates.ToList();
     }
 
     public static void AddEstimate(Estimate estimate)
